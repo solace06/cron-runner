@@ -1,3 +1,10 @@
 env: "dev"
+database:
+  host: "localhost"
+  port: 5432
+  user: "postgres"
+  password: "pass"
+  dbname: "cron_runner"
+  sslmode: "disable"
 http_server:
   address: "localhost:8081"

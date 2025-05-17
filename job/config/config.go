@@ -12,8 +12,18 @@ type HTTPServer struct {
 	Address string `yaml:"address" env-required:"true"`
 }
 
+type Database struct {
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	User     string `yaml:"user"`
+	Password string `yaml:"password"`
+	DBName   string `yaml:"dbname"`
+	SSLMode  string `yaml:"sslmode"`
+}
+
 type Config struct {
 	Env        string `yaml:"env" env:"ENV" env-required:"true"`
+	Database   `yaml:"database"`
 	HTTPServer `yaml:"http_server"`
 }
 
