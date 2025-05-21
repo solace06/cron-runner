@@ -21,11 +21,11 @@ func main() {
 
 	//setup database
 	db, er := database.NewDB(cfg)
-	if er != nil{
-		log.Fatal("failed to connect to the database: ",er)
+	if er != nil {
+		log.Fatal("failed to connect to the database: ", er)
 	}
-	defer func(){
-		if err:=db.Close(); err!= nil{
+	defer func() {
+		if err := db.Close(); err != nil {
 			slog.Error("error closing the database", slog.String("error: ", err.Error()))
 		}
 	}()
