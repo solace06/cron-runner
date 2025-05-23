@@ -12,33 +12,30 @@ import (
 
 	"github.com/solace06/cron-runner/api"
 	"github.com/solace06/cron-runner/database"
-	"github.com/solace06/cron-runner/job/config"
+	"github.com/solace06/cron-runner/internal"
 )
 
 func main() {
-	//load config
-	cfg := config.MustLoad()
 
-	//setup database
-	db, er := database.NewDB(cfg)
-	if er != nil {
-		log.Fatal("failed to connect to the database: ", er)
+	s, er := internal.NewScope()
+	if er != nil{
+		log.Fatalf("failed to initialize scope: %v", er)
 	}
 	defer func() {
-		if err := db.Close(); err != nil {
+		if err := s.DB.Close(); err != nil {
 			slog.Error("error closing the database", slog.String("error: ", err.Error()))
 		}
 	}()
 
-	database.Migrate(db)
+	database.Migrate(s.DB)
 
 	//setup router
 	router := api.NewRouter()
 
 	//setup server
-	slog.Info("started server", slog.String("address", cfg.Address))
+	slog.Info("started server", slog.String("address", s.Cfg.Address))
 	server := http.Server{
-		Addr:    cfg.Address,
+		Addr:    s.Cfg.Address,
 		Handler: router,
 	}
 
