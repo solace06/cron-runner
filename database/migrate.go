@@ -1,16 +1,15 @@
 package database
 
 import (
-	"database/sql"
 	"log"
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 )
 
-func Migrate(db *sql.DB) {
+func Migrate(db *DB) {
 
-	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	driver, err := postgres.WithInstance(db.Conn, &postgres.Config{})
 	if err != nil {
 		log.Fatalf("could not create postgres driver: %v", err)
 	}

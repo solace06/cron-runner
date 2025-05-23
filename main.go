@@ -30,6 +30,8 @@ func main() {
 		}
 	}()
 
+	database.Migrate(db)
+
 	//setup router
 	router := api.NewRouter()
 
@@ -46,7 +48,7 @@ func main() {
 	go func() {
 		err := server.ListenAndServe()
 		if err != nil {
-			log.Fatal("failed to start server")
+			log.Fatalf("failed to start server %v", err)
 		}
 	}()
 
