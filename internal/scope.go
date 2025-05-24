@@ -22,7 +22,7 @@ func NewScope() (*Scope, error) {
 	//set up the database
 	db, err := database.NewDB(cfg)
 	if err != nil {
-		return nil, fmt.Errorf("failed to connect to the database: ", err)
+		return nil, fmt.Errorf("failed to connect to the database: %v", err)
 	}
 
 	//set up the logger
