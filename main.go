@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/solace06/cron-runner/api"
-	"github.com/solace06/cron-runner/database"
 	"github.com/solace06/cron-runner/internal"
 )
 
@@ -27,7 +26,7 @@ func main() {
 		}
 	}()
 
-	database.Migrate(s.DB)
+	s.DB.Migrate()
 
 	//setup router
 	router := api.NewRouter()

@@ -7,7 +7,7 @@ import (
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 )
 
-func Migrate(db *DB) {
+func (db *DB) Migrate() {
 
 	driver, err := postgres.WithInstance(db.Conn, &postgres.Config{})
 	if err != nil {
