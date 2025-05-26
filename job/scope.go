@@ -2,8 +2,6 @@ package job
 
 import (
 	"fmt"
-	"log"
-	"os"
 
 	"github.com/solace06/cron-runner/database"
 	"github.com/solace06/cron-runner/job/config"
@@ -12,7 +10,6 @@ import (
 type Scope struct {
 	db  *database.DB
 	Cfg *config.Config
-	Log *log.Logger
 }
 
 func NewScope() (*Scope, error) {
@@ -25,13 +22,9 @@ func NewScope() (*Scope, error) {
 		return nil, fmt.Errorf("failed to connect to the database: %v", err)
 	}
 
-	//set up the logger
-	logger:=log.New(os.Stdout, "[APP] ", log.LstdFlags)
-
 	return &Scope{
 		db: db,
 		Cfg: cfg,
-		Log: logger,
 	}, nil
 }
 
