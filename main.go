@@ -11,22 +11,23 @@ import (
 	"time"
 
 	"github.com/solace06/cron-runner/api"
-	"github.com/solace06/cron-runner/internal"
+	"github.com/solace06/cron-runner/job"
 )
 
 func main() {
 
-	s, er := internal.NewScope()
-	if er != nil{
+	s, er := job.NewScope()
+	if er != nil {
 		log.Fatalf("failed to initialize scope: %v", er)
 	}
+	
 	defer func() {
-		if err := s.DB.Close(); err != nil {
+		if err := s.Close(); err != nil {
 			slog.Error("error closing the database", slog.String("error: ", err.Error()))
 		}
 	}()
 
-	s.DB.Migrate()
+	s.Migrate()
 
 	//setup router
 	router := api.NewRouter()

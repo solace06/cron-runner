@@ -1,4 +1,4 @@
-package internal
+package job
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 )
 
 type Scope struct {
-	DB  *database.DB
+	db  *database.DB
 	Cfg *config.Config
 	Log *log.Logger
 }
@@ -29,8 +29,16 @@ func NewScope() (*Scope, error) {
 	logger:=log.New(os.Stdout, "[APP] ", log.LstdFlags)
 
 	return &Scope{
-		DB: db,
+		db: db,
 		Cfg: cfg,
 		Log: logger,
 	}, nil
+}
+
+func (s *Scope) Migrate(){
+	s.db.Migrate()
+}
+
+func (s *Scope) Close() error{
+	return s.db.Close()
 }
