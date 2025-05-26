@@ -30,7 +30,7 @@ func main() {
 	s.Migrate()
 
 	//setup router
-	router := api.NewRouter()
+	router := api.NewRouter(s)
 
 	//setup server
 	slog.Info("started server", slog.String("address", s.Cfg.Address))
