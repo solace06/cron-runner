@@ -8,5 +8,5 @@ CREATE TABLE job_executions(
     exit_code INTEGER,
     output TEXT,
     error TEXT,
-    retry_count INTEGER DEFAULT 0,
+    retry_count INTEGER DEFAULT 0
 );

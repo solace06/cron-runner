@@ -10,5 +10,5 @@ CREATE TABLE jobs (
     last_run_at TIMESTAMPTZ,
     next_run_at TIMESTAMPTZ,
     retry_count INTEGER DEFAULT 0,
-    max_retries INTEGER DEFAULT 0,
+    max_retries INTEGER DEFAULT 0
 );

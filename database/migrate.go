@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 )
 
@@ -14,7 +15,7 @@ func (db *DB) Migrate() {
 		log.Fatalf("could not create postgres driver: %v", err)
 	}
 
-	m, er := migrate.NewWithDatabaseInstance("file://migrations", "postgres", driver)
+	m, er := migrate.NewWithDatabaseInstance("file://database/migrations", "postgres", driver)
 	if er != nil {
 		log.Fatalf("migration init failed: %v", er)
 	}
