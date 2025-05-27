@@ -21,7 +21,6 @@ func main() {
 		log.Fatalf("failed to initialize scope: %v", er)
 	}
 	
-
 	defer func() {
 		if err := s.Close(); err != nil {
 			slog.Error("error closing the database", slog.String("error: ", err.Error()))
