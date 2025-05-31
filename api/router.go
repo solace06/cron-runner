@@ -10,6 +10,7 @@ func NewRouter(s *job.Scope) *mux.Router {
 
 	//public route
 	r.HandleFunc("/", s.Home).Methods("GET")
+	r.HandleFunc("/register", s.Register).Methods("POST")
 	r.HandleFunc("/login", s.Login).Methods("POST")
 
 	//protected routes
