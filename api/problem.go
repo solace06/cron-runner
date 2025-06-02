@@ -29,3 +29,23 @@ func InvalidJSON(detail, instance string) ProblemDetails {
 		Instance: instance,
 	}
 }
+
+func Conflict(detail, instance string) ProblemDetails {
+	return ProblemDetails{
+		Type:     "/problem/conflict",
+		Title:    "Conflict",
+		Status:   http.StatusConflict,
+		Details:  detail,
+		Instance: instance,
+	}
+}
+
+func Internal(detail, instance string) ProblemDetails {
+	return ProblemDetails{
+		Type:     "/problem/internal",
+		Title:    "Internal Server Error",
+		Status:   http.StatusInternalServerError,
+		Details:  detail,
+		Instance: instance,
+	}
+}
