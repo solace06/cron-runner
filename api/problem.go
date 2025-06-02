@@ -10,8 +10,8 @@ type ProblemDetails struct {
 	Instance string `json:"instance,omitempty"`
 }
 
-func BadRequest(detail, instance string) ProblemDetails {
-	return ProblemDetails{
+func BadRequest(detail, instance string) *ProblemDetails {
+	return &ProblemDetails{
 		Type:     "/problem/bad-request",
 		Title:    "Bad Request",
 		Status:   http.StatusBadRequest,
@@ -20,8 +20,8 @@ func BadRequest(detail, instance string) ProblemDetails {
 	}
 }
 
-func InvalidJSON(detail, instance string) ProblemDetails {
-	return ProblemDetails{
+func InvalidJSON(detail, instance string) *ProblemDetails {
+	return &ProblemDetails{
 		Type:     "/problem/invalid-json",
 		Title:    "Invalid JSON",
 		Status:   http.StatusBadRequest,
@@ -30,8 +30,8 @@ func InvalidJSON(detail, instance string) ProblemDetails {
 	}
 }
 
-func Conflict(detail, instance string) ProblemDetails {
-	return ProblemDetails{
+func Conflict(detail, instance string) *ProblemDetails {
+	return &ProblemDetails{
 		Type:     "/problem/conflict",
 		Title:    "Conflict",
 		Status:   http.StatusConflict,
@@ -40,8 +40,8 @@ func Conflict(detail, instance string) ProblemDetails {
 	}
 }
 
-func Internal(detail, instance string) ProblemDetails {
-	return ProblemDetails{
+func Internal(detail, instance string) *ProblemDetails {
+	return &ProblemDetails{
 		Type:     "/problem/internal",
 		Title:    "Internal Server Error",
 		Status:   http.StatusInternalServerError,
