@@ -7,10 +7,11 @@ import (
 
 func NewRouter(s *job.Scope) *mux.Router {
 	r := mux.NewRouter()
+	v1 := r.PathPrefix("/api/v1").Subrouter()
 
 	//public route
 	r.HandleFunc("/", s.Home).Methods("GET")
-	r.HandleFunc("/register", s.Register).Methods("POST")
+	v1.HandleFunc("/register", s.Register).Methods("POST")
 	r.HandleFunc("/login", s.Login).Methods("POST")
 
 	//protected routes
