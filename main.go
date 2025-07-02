@@ -10,7 +10,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/solace06/cron-runner/api"
 	"github.com/solace06/cron-runner/job"
 )
 
@@ -30,7 +29,7 @@ func main() {
 	s.Migrate()
 
 	//setup router
-	router := api.NewRouter(s)
+	router := job.NewRouter(s)
 
 	//setup server
 	slog.Info("started server", slog.String("address", s.Cfg.Address))
