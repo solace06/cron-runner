@@ -29,6 +29,8 @@ func (s *Scope) Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Scope) Register(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+
 	var user UserRegister
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
@@ -41,31 +43,33 @@ func (s *Scope) Register(w http.ResponseWriter, r *http.Request) {
 	user.Password = strings.TrimSpace(user.Password)
 	user.UserName = strings.TrimSpace(user.UserName)
 
-	if user.UserName == "" || user.Password == "" || user.Email == ""{
+	if user.UserName == "" || user.Password == "" || user.Email == "" {
 		slog.Error("invalid username, email or password")
-		api.WriteProblem(w, api.BadRequest("Username, email or password cannot be empty",""))
+		api.WriteProblem(w, api.BadRequest("Username, email or password cannot be empty", ""))
 		return
 	}
-	if len(user.UserName) < 3{
+	if len(user.UserName) < 3 {
 		slog.Error("invalid username")
-		api.WriteProblem(w, api.BadRequest("Username must contain atleast 3 characters",""))
+		api.WriteProblem(w, api.BadRequest("Username must contain atleast 3 characters", ""))
 		return
 	}
-	if len(user.Password) < 6{
+	if len(user.Password) < 6 {
 		slog.Error("invalid password")
-		api.WriteProblem(w, api.BadRequest("Password should contain atleast 6 characters",""))
+		api.WriteProblem(w, api.BadRequest("Password should contain atleast 6 characters", ""))
 		return
 	}
-	if !IsValidEmail(user.Email){
+	if !IsValidEmail(user.Email) {
 		slog.Error("invalid email")
-		api.WriteProblem(w, api.BadRequest("Email is not valid",""))
+		api.WriteProblem(w, api.BadRequest("Email is not valid", ""))
 		return
 	}
-	if !IsStrongPassword(user.Password){
+	if !IsStrongPassword(user.Password) {
 		slog.Error("password not strong enough")
-		api.WriteProblem(w, api.BadRequest("Password must contain one uppercase character, one special character and one number",""))
+		api.WriteProblem(w, api.BadRequest("Password must contain one uppercase character, one special character and one number", ""))
 		return
 	}
+
+	err = s.RegisterUser(ctx, user)
 }
 
 func (s *Scope) Login(w http.ResponseWriter, r *http.Request) {
