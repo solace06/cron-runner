@@ -41,19 +41,19 @@ func (s *Scope) Register(w http.ResponseWriter, r *http.Request) {
 	user.Password = strings.TrimSpace(user.Password)
 	user.UserName = strings.TrimSpace(user.UserName)
 
-	if user.UserName == "" || len(user.UserName) < 3{
-		slog.Error("invalid username")
-		api.WriteProblem(w, api.BadRequest("Username should contain atleast 3 characters",""))
+	if user.UserName == "" || user.Password == "" || user.Email == ""{
+		slog.Error("invalid username, email or password")
+		api.WriteProblem(w, api.BadRequest("Username, email or password cannot be empty",""))
 		return
 	}
-	if user.Password == "" || len(user.Password) < 6{
+	if len(user.UserName) < 3{
+		slog.Error("invalid username")
+		api.WriteProblem(w, api.BadRequest("Username must contain atleast 3 characters",""))
+		return
+	}
+	if len(user.Password) < 6{
 		slog.Error("invalid password")
 		api.WriteProblem(w, api.BadRequest("Password should contain atleast 6 characters",""))
-		return
-	}
-	if user.Email == ""{
-		slog.Error("invalid email")
-		api.WriteProblem(w, api.BadRequest("Email cannot be empty",""))
 		return
 	}
 	if !IsValidEmail(user.Email){
