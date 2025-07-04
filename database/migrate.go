@@ -10,7 +10,7 @@ import (
 
 func (db *DB) Migrate() {
 
-	driver, err := postgres.WithInstance(db.Conn, &postgres.Config{})
+	driver, err := postgres.WithInstance(db.SQLConn, &postgres.Config{})
 	if err != nil {
 		log.Fatalf("could not create postgres driver: %v", err)
 	}

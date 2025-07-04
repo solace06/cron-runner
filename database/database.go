@@ -7,7 +7,6 @@ import (
 	"log/slog"
 	"time"
 
-	_ "github.com/lib/pq"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
@@ -16,7 +15,8 @@ import (
 )
 
 type DB struct {
-	Conn *bun.DB
+	Conn    *bun.DB
+	SQLConn *sql.DB
 }
 
 func NewDB(cfg *config.Config) (*DB, error) {
@@ -32,8 +32,10 @@ func NewDB(cfg *config.Config) (*DB, error) {
 
 	db := pgdriver.NewConnector(pgdriver.WithDSN(connStr))
 
+	sqldb := sql.OpenDB(db)
+
 	dbConn := bun.NewDB(
-		sql.OpenDB(db),
+		sqldb,
 		pgdialect.New(),
 	)
 
@@ -45,7 +47,10 @@ func NewDB(cfg *config.Config) (*DB, error) {
 
 	slog.Info("Successfully connected to the database")
 
-	return &DB{Conn: dbConn}, nil
+	return &DB{
+		Conn:    dbConn,
+		SQLConn: sqldb,
+	}, nil
 }
 
 func (db *DB) Close() error {
