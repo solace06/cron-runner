@@ -76,8 +76,11 @@ func (s *Scope) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	api.WriteResponse(w, 201, "")
+	resp:=&Response{
+		Message: "User registered successfully",
+	}
 
+	api.WriteResponse(w, 201, resp)
 }
 
 func (s *Scope) Login(w http.ResponseWriter, r *http.Request) {
