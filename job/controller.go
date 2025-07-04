@@ -76,6 +76,8 @@ func (s *Scope) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	slog.Info("user created successfully")
+
 	resp:=&Response{
 		Message: "User registered successfully",
 	}

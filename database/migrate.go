@@ -20,7 +20,7 @@ func (db *DB) Migrate() {
 		log.Fatalf("migration init failed: %v", er)
 	}
 
-	if er = m.Up(); er != nil && err != migrate.ErrNoChange {
+	if er = m.Up(); er != nil && er != migrate.ErrNoChange {
 		log.Fatalf("migration failed: %v", er)
 	}
 
