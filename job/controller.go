@@ -70,6 +70,14 @@ func (s *Scope) Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = s.RegisterUser(ctx, user)
+	if err != nil{
+		slog.Error("error creating the user","error",err.Error())
+		api.WriteProblem(w, api.Internal("Error creating the user",""))
+		return
+	}
+
+	api.WriteResponse(w, 201, "")
+
 }
 
 func (s *Scope) Login(w http.ResponseWriter, r *http.Request) {
