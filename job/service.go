@@ -12,7 +12,7 @@ func (s *Scope) RegisterUser(ctx context.Context, user UserRegister) error {
 		return err
 	}
 
-	err = s.db.CreateUser(ctx, user.UserName, user.Email, hashedPassword)
+	err = s.CreateUser(ctx, user.UserName, user.Email, hashedPassword)
 	if err != nil{
 		slog.Error("error inserting the user")
 		return err
